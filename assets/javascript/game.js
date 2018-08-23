@@ -1,28 +1,37 @@
-var word;
-var wordBank = ["apple", "strawberry", "watermelon", "pineapple"];
-var lettersUsedArr; //array that stores letters already chosen
-var wordArr = []; //array with each character of the word stored
-var counter = 10;
+var word;                //word to be guessed
+var lettersUsedArr;     //array that stores letters already chosen
+var wordArr = [];       //array with each character of the word stored
+var counter = 10;       // # of tries
 var points = 0;
 var start = true;
-
+var wordBank = ["apple", "strawberry", "watermelon", "pineapple", "cantaloupe", 
+                "dragonfruit", "persimmon", "tangerine", "lychee", "guava"];
+var images = {apple: "apple.jpg", strawberry: "strawberry.jpg", watermelon: "watermelon.jpg", 
+            pineapple: "pineapple.jpg", cantaloupe: "cantaloupe.jpg", dragonfruit: "dragonfruit.jpg", 
+            persimmon: "persimmon.jpg", tangerine: "tangerine.jpg", lychee: "lychee.jpg", guava: "guava"};
+                
 var wordDisp = document.getElementById("wordDisplayed");
 var counterText = document.getElementById("chances");
 var lUsed = document.getElementById("lettersUsed");
 var win = document.getElementById("wins");
+
 win.textContent = points;
 counterText.textContent = counter; 
 
-//-------------------------functions---------------------------
+
+//******************************** functions *********************************
+//****************************************************************************
 
 function gameStart() {
     word = wordBank[Math.floor(Math.random() * wordBank.length)];
+    wordArr = [];
 
     for (var i = 0; i < word.length; i++) {     //populates the wordArr and word displayed 
         wordArr[i] = "_";                       //with the amount of dashes needed
         wordDisp.textContent += "_ ";
     }
-    lettersUsedArr = []                      //resets the letters used
+   
+    lettersUsedArr = [];                     //resets the letters used
     counter = 10;                            //and counter
     counterText.textContent = counter;
     start = false;
@@ -86,21 +95,25 @@ function gameWon() {                            //checks if there are any letter
     return true;
 }
 
-//-----------------------------------------------------------------
+function displayImage() {
+    document.getElementById("imgId").src = "assets/images/" + images[word];
+    // console.log(img);
+    // console.log(document.getElementById("imgId").src)
+}
+
+//****************************************************************************
+//****************************************************************************
 
 document.onkeyup = function(event) {
     userGuess = event.key.toLowerCase();
 
-    if(start) {
+    if(start) {                 //first key stroke starts the game
         gameStart();
-        return;     //first key stroke starts the game
+        document.getElementById("subTitle").style.visibility = "hidden";
+        return;     
     }
     
-    if(gameOver()) {
-        return;
-    }
-
-    if (!checkLetters(userGuess)) {
+    if (!checkLetters(userGuess)) {     //checks that only letters are being used
         return;
     }
 
@@ -109,6 +122,7 @@ document.onkeyup = function(event) {
     lettersUsed();    
     
     if (gameWon()) {
+        displayImage();
         points++;
         win.textContent = points;
         wordDisp.textContent = "";
@@ -116,6 +130,12 @@ document.onkeyup = function(event) {
         gameStart();
     }
 
+    if(gameOver()) {
+        wordDisp.textContent = "";
+        lUsed.textContent = "";
+        gameStart();
+        return;
+    }
 
 }
 

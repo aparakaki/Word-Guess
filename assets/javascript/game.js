@@ -10,7 +10,7 @@ var wordBank = ["apple", "strawberry", "watermelon", "pineapple", "cantaloupe",
                 "dragonfruit", "persimmon", "tangerine", "lychee", "guava"];
 var images = {apple: "apple.jpg", strawberry: "strawberry.jpg", watermelon: "watermelon.jpg", 
             pineapple: "pineapple.jpg", cantaloupe: "cantaloupe.jpg", dragonfruit: "dragonfruit.jpg", 
-            persimmon: "persimmon.jpg", tangerine: "tangerine.jpg", lychee: "lychee.jpg", guava: "guava"};
+            persimmon: "persimmon.jpg", tangerine: "tangerine.jpg", lychee: "lychee.jpg", guava: "guava.jpg"};
 
 var wordDisp = document.getElementById("wordDisplayed");
 var counterText = document.getElementById("chances");
